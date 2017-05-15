@@ -45,7 +45,7 @@
 	      <!-- Password-->
 	      <label class="control-label" for="contraseña">Contreseña</label>
 	      <div class="controls">
-			<input type = "text" name = "contraseña" placeholder = "Contraseña"> <br>
+		      <input type = "password" name = "contraseña" placeholder = "Contraseña"> <br>
 	      </div>
 	    </div>
 	 

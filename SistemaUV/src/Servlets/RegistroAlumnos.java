@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Controlador.ConexionDB;
 import Controlador.Consultas;
 
 /**
@@ -33,28 +34,15 @@ public class RegistroAlumnos extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 
-		Calendar fech = new GregorianCalendar();
-		int year = fech.get(Calendar.YEAR);
-		int month = fech.get(Calendar.MONTH);
-		month++;
-		int day = fech.get(Calendar.DAY_OF_MONTH);
-		String año = Integer.toString(year);
-		String mes = Integer.toString(month);
-		String dia = Integer.toString(day);
-		
-		String fecha = año + "-" + mes + "-" + dia;
-		
-		
+
 		String nombre = request.getParameter("nombre");
 		String ape = request.getParameter("apellido");
 		int semestre = Integer.parseInt(request.getParameter("semestre"));
-		String carrera = request.getParameter("carrera");
-		String mat = request.getParameter("matricula");
-		
+		int carrera = Integer.parseInt(request.getParameter("carrera"));
+		String matricula = request.getParameter("matricula");
 		Consultas co = new Consultas();
-		
-		if(co.registrarAlumno(nombre, ape, semestre, carrera, mat, 1, fecha)){
-			
+		//int materia .... Creación de función de recoleccion de materia esto funcionara con la materia a seguir
+		if(co.registrarAlumno(nombre, ape, semestre, carrera, matricula, 1)){
 			response.sendRedirect("index.jsp");
 		}
 		else{

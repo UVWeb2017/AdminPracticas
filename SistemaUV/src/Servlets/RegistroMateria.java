@@ -1,7 +1,10 @@
 package Servlets;
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +12,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Controlador.ConexionDB;
 import Controlador.Consultas;
 
 /**
- * Servlet implementation class RegistroUsuarios
+ * Servlet implementation class RegistroAlumnos
  */
-@WebServlet(name = "usuarioregistra", description = "RegUsuario", urlPatterns = { "/usuarioregistra" })
-public class RegistroUsuarios extends HttpServlet {
+@WebServlet(name = "nuevaMateria", urlPatterns = { "/nuevaMateria" })
+public class RegistroMateria extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	public String getServletInfo() {
-		return null; 
-	}
+    
+	 
 
 
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -33,19 +34,18 @@ public class RegistroUsuarios extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		PrintWriter out = response.getWriter();
-		
-		String nombre = request.getParameter("nombre");
-		String usuario = request.getParameter("usuario");
-		String mail = request.getParameter("email");
-		String pass = request.getParameter("contraseña");
-		String codigo = request.getParameter("codigo");
+
+
+		String name = request.getParameter("nombre");
+		int idMes = Integer.parseInt(request.getParameter("mes"));
+		int yeard = Integer.parseInt(request.getParameter("yeard"));
+		String hora = request.getParameter("hora");
 		Consultas co = new Consultas();
-		if(co.registrarUsuario(nombre, usuario, mail, pass,codigo)){
-			
+		if(co.registrarMaterias(name, idMes, yeard, hora)){
 			response.sendRedirect("index.jsp");
 		}
 		else{
-			response.sendRedirect("registro.jsp");
+			response.sendRedirect("materiasRegistro.jsp");
 		}
 	}
 

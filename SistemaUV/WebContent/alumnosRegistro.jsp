@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="java.sql.*" %><!-- Utilización de sql en jsp -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -10,7 +11,7 @@
 
 <body>
 
-	<form class="form-horizontal" action='usuarioregistra' method="POST">
+	<form class="form-horizontal" action='nuevoAlumno' method="POST">
 	
 	  <fieldset>
 	    <div id="legend">
@@ -29,8 +30,7 @@
 	      <div class="controls">
 			<input type = "text" name = "apellido" placeholder = "Apellido">
 	      </div>
-	    </div>
-	    
+	    </div>	    
 	    <div class="control-group">
 	      <!-- Apellidos -->
 	      <label class="control-label"  for="matricula">Matricula</label>
@@ -40,32 +40,46 @@
 	    </div>
 	    
 	    <div class="control-group">
-	      <!-- Apellidos -->
+	      <!-- Semestre -->
 	      <label class="control-label"  for="semestre">Semestre</label>
 	      <div class="controls">
-			<input type = "number" name = "semestre" min = "1" max = "10" placeholder = "Num">
+		  <!--   <input type = "number" name = "semestre" placeholder = "Semestre">-->
+		 	<input type = "number" name = "semestre" min = "1" max = "10" placeholder = "Num">
 	      </div>
 	    </div>
 	    
 	    <div class="control-group">
-	      <!-- Apellidos -->
+	      <!-- Carrera -->
 	      <label class="control-label"  for="carrera">Carrera</label>
 	      <div class="controls">
-			<select name="Carrera">
-			  <option>Ingeniería Eléctrica</option>
-			  <option>Ingeniería Mecánica</option>
-			  <option>Ingeniería Industrial</option>
-			  <option>Ingeniería Informática</option>
-			  <option>Ingeniería Electronica Y Comunicaciones</option>
-			  <option>Ingeniería Topografica Geodésica</option>
-			  <option>Ingeniería Civil</option>
-			  <option>Ingeniería Quimica</option>
-			  <option>Ingeniería Naval</option>
-			  <option>Ingeniería Metalurgica</option>
-			</select>
+		  <select type = "number" name="carrera" placeholder = "Carrera">
+		 	<%
+		        try{
+		            Class.forName("com.mysql.jdbc.Driver").newInstance();
+		            Connection CON = java.sql.DriverManager.getConnection("jdbc:mysql://localhost/SistemaUV","root","notadesuicidio96");
+		            String qrCate = " SELECT "+
+									"id, "+
+		            				"nombre "+
+		                            "FROM Carreras";
+		            PreparedStatement  PS   = CON.prepareStatement(qrCate);
+		            ResultSet RS            = PS.executeQuery();
+		
+		            if(!RS.next()){
+		                out.println("<OPTION VALUE=\"0\" SELECTED>No hay datos</OPTION>");
+		            }else{
+		                do{
+		                    out.println("<OPTION VALUE=\""+ RS.getString(1) +"\">"+ RS.getString(2) +"</OPTION>");
+		                }while(RS.next());
+		            }
+		        }catch (Exception e) {
+		            out.println("<OPTION VALUE=\"0\" SELECTED>No hay datos</OPTION>");
+		            e.printStackTrace(System.err);
+		        }       
+		    %>
+		    </select>
 		  </div>
 	    </div>
-	    
+        
 	    <div class="control-group">
 	      <!-- Button -->
 	      <div class="controls">
